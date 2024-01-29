@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'profiles',
+    'courses',
 ]
 
 MIDDLEWARE = [
@@ -85,9 +86,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'eduhub_drf_api.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 
 DATABASES = {
     'default': {
