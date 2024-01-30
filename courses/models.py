@@ -21,7 +21,7 @@ COURSE_CATEGORIES={
 
 class Course(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    descirption = models.TextField()
+    description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to = 'images/', default='../course_default'

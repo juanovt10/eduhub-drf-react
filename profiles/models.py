@@ -17,6 +17,7 @@ class Profile(models.Model):
     avatar = models.ImageField(
         upload_to = 'images/', default='../default_profile_m2rn8r'
     )
+    is_instructor = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']
