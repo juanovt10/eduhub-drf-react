@@ -18,7 +18,13 @@ class CourseList(generics.ListAPIView):
         enrollments_count = Count('enrollment', distinct=True),
     ).order_by('created_at')
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'categories',
     ]
     ordering_fields = [
         'ratings_count',

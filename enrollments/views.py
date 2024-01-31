@@ -18,4 +18,3 @@ class EnrollmentDetail(generics.RetrieveDestroyAPIView):
     serializer_class = EnrollmentSerializer
     queryset = Enrollment.objects.all()
 
-# Create your views here.
