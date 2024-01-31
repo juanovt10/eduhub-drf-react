@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from .models import Rating
@@ -33,6 +34,14 @@ class RatingSerializer(serializers.ModelSerializer):
             'updated_at', 'content', 'rating', 'is_owner',
             'profile_id', 'profile_image',
         ]
+
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplicate'
+            })
 
 
 class RatingDetailSerializer(RatingSerializer):
