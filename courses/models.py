@@ -5,6 +5,7 @@ from django.db.models import Avg
 
 
 COURSE_CATEGORIES={
+    ('', 'Choose category'),
     ('Technology', 'Technology'),
     ('Business', 'Business'),
     ('Design', 'Design'),
