@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'courses',
     'ratings',
     'enrollments',
+    'wish_lists',
 ]
 
 MIDDLEWARE = [
