@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models import Avg
 
 
 COURSE_CATEGORIES={
@@ -32,6 +33,7 @@ class Course(models.Model):
     video_hours = models.DecimalField(max_digits=5, decimal_places=1)
     test_count = models.PositiveIntegerField(default=0)
     article_count = models.PositiveIntegerField(default=0)
+    
 
     class Meta:
         ordering = ['-created_at']

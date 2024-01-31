@@ -1,4 +1,4 @@
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.http import Http404
 from rest_framework import status, permissions, generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -9,7 +9,7 @@ from .serializers import CourseSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 
 
-class CourseList(generics.ListAPIView):
+class CourseList(generics.ListCreateAPIView):
     serializer_class = CourseSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
@@ -17,6 +17,7 @@ class CourseList(generics.ListAPIView):
     queryset = Course.objects.annotate(
         ratings_count = Count('rating', distinct=True),
         enrollments_count = Count('enrollment', distinct=True),
+        overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
     ).order_by('created_at')
     filter_backends = [
         filters.OrderingFilter,
@@ -42,49 +43,22 @@ class CourseList(generics.ListAPIView):
     ]
 
 
-class CourseDetail(APIView):
+
+    def create(self, request, *args, **kwargs):
+        if not request.user.profile.is_instructor:
+            return Response(
+                {'detail': 'You do not have permission to create a course. Only certified instructors can create courses.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        return super().create(request, *args, **kwargs)
+
+class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CourseSerializer
     queryset = Course.objects.annotate(
         ratings_count = Count('rating', distinct=True),
         enrollments_count = Count('enrollment', distinct=True),
+        overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
     ).order_by('created_at')
-
-    def get_object(self, pk):
-        try:
-            course = Course.objects.annotate(
-                ratings_count = Count('rating', distinct=True),
-                enrollments_count = Count('enrollment', distinct=True),
-            ).get(pk=pk)
-            self.check_object_permissions(self.request, course)
-            return course
-        except Course.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        course = self.get_object(pk)
-        serializer = CourseSerializer(
-            course, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        course = self.get_object(pk)
-        serializer = CourseSerializer(
-            course, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
-
-    def delete(self, request, pk):
-        course = self.get_object(pk)
-        course.delete()
-        return Response(
-            status=status.HTTP_204_NO_CONTENT
-        )
 
 
