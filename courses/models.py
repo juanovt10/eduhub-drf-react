@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.db.models import Avg
 
 
-COURSE_CATEGORIES={
+COURSE_CATEGORIES=[
     ('', 'Choose category'),
     ('Technology', 'Technology'),
     ('Business', 'Business'),
@@ -17,7 +17,7 @@ COURSE_CATEGORIES={
     ('Social Sciences', 'Social Sciences'),
     ('Art and Creativity', 'Art and Creativity'),
     ('Health and Fitness', 'Health and Fitness'),
-}
+]
 
 
 class Course(models.Model):
@@ -27,7 +27,7 @@ class Course(models.Model):
     image = models.ImageField(
         upload_to = 'images/', default='../course_default'
     )
-    categories = models.CharField(max_length=50, choices=COURSE_CATEGORIES)
+    categories = models.CharField(max_length=50, choices=COURSE_CATEGORIES, default='Technology')
     duration = models.DurationField()
     created_at = models.DateTimeField(default=timezone.now)
     price = models.DecimalField(max_digits=10, decimal_places=2)
