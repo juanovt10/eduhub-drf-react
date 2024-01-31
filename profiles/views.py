@@ -20,6 +20,7 @@ class ProfileList(generics.ListAPIView):
         'ratings_count',
         'enrollments_count',
         'wish_list_count',
+        'created_at',
     ]
 
 

@@ -1,5 +1,6 @@
+from django.db.models import Count
 from django.http import Http404
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Course
@@ -7,50 +8,42 @@ from .serializers import CourseSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 
 
-class CourseList(APIView):
+class CourseList(generics.ListAPIView):
     serializer_class = CourseSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-
-    def get(self, request):
-        courses = Course.objects.all()
-        serializer = CourseSerializer(
-            courses, many=True, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def post(self, request):
-        if not request.user.profile.is_instructor:
-            return Response(
-                {
-                    'You do not have permission to create a course, ' 
-                    'only certified instructors can create courses'
-                },
-                status=status.HTTP_403_FORBIDDEN
-            )
-
-
-        serializer = CourseSerializer(
-            data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save(owner=request.user)
-            return Response(
-                serializer.data, status=status.HTTP_201_CREATED
-            )
-        return Response(
-            serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
+    queryset = Course.objects.annotate(
+        ratings_count = Count('rating', distinct=True),
+        enrollments_count = Count('enrollment', distinct=True),
+    ).order_by('created_at')
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+    ordering_fields = [
+        'ratings_count',
+        'enrollment_count',
+        'created_at', 
+        'price',
+        'duration',
+        'created_at',
+    ]
 
 
 class CourseDetail(APIView):
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = CourseSerializer
+    queryset = Course.objects.annotate(
+        ratings_count = Count('rating', distinct=True),
+        enrollments_count = Count('enrollment', distinct=True),
+    ).order_by('created_at')
 
     def get_object(self, pk):
         try:
-            course = Course.objects.get(pk=pk)
+            course = Course.objects.annotate(
+                ratings_count = Count('rating', distinct=True),
+                enrollments_count = Count('enrollment', distinct=True),
+            ).get(pk=pk)
             self.check_object_permissions(self.request, course)
             return course
         except Course.DoesNotExist:
