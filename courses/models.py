@@ -4,7 +4,6 @@ from django.utils import timezone
 
 
 COURSE_CATEGORIES={
-    ('', 'Course category'),
     ('Technology', 'Technology'),
     ('Business', 'Business'),
     ('Design', 'Design'),
