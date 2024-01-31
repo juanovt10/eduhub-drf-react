@@ -14,6 +14,7 @@ class CourseSerializer(serializers.ModelSerializer):
     )
     rating_id = serializers.SerializerMethodField()
 
+
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
