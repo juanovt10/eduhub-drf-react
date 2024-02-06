@@ -14,7 +14,7 @@ class Profile(models.Model):
         blank=True,
         help_text="Please enter your date of birth in DD-MM-YYYY format.",
     )
-    avatar = models.ImageField(
+    image = models.ImageField(
         upload_to = 'images/', default='../default_profile_m2rn8r'
     )
     is_instructor = models.BooleanField(default=False)
