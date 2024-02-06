@@ -50,7 +50,7 @@ JWT_AUTH_REFRESH_COOKIE = 'my-refresh-token'
 JWT_AUTH_SAMESITE = 'None'
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZERS': 'eduhub_drf_api.serializers.CurrentUserSerializer'
+    'USER_DETAILS_SERIALIZER': 'eduhub_drf_api.serializers.CurrentUserSerializer'
 }
 
 # Quick-start development settings - unsuitable for production
