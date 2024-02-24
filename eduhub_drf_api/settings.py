@@ -66,11 +66,13 @@ ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
     '8000-juanovt10-eduhubdrfreac-9gnsdlmtz9i.ws-eu107.gitpod.io',
     '8000-juanovt10-eduhubdrfreac-9gnsdlmtz9i.ws-us107.gitpod.io',
+    '8000-juanovt10-eduhubdrfreac-h9kzyc4s91m.ws-eu108.gitpod.io',
 ]
  
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-juanovt10-eduhubdrfreac-9gnsdlmtz9i.ws-eu107.gitpod.io',
     'https://8000-juanovt10-eduhubdrfreac-9gnsdlmtz9i.ws-us107.gitpod.io',
+    'https://8000-juanovt10-eduhubdrfreac-h9kzyc4s91m.ws-eu108.gitpod.io',
 ]
 
 # Application definition

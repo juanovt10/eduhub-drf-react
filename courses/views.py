@@ -4,7 +4,7 @@ from rest_framework import status, permissions, generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Course
+from .models import Course, COURSE_CATEGORIES
 from .serializers import CourseSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 
@@ -60,5 +60,10 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
         enrollments_count = Count('enrollment', distinct=True),
         overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
     ).order_by('created_at')
+
+class CourseCategoryList(APIView):
+    def get(self, request, format=None):
+        categories = [{'key': cat[0], 'value': cat[1]} for cat in COURSE_CATEGORIES]
+        return Response(categories)
 
 
