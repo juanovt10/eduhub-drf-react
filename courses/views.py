@@ -26,12 +26,12 @@ class CourseList(generics.ListCreateAPIView):
     ]
     filterset_fields = [
         'owner',
-        'categories',
+        'category',
     ]
     search_fields = [
         'owner__username',
         'title',
-        'categories',
+        'category',
     ]
     ordering_fields = [
         'ratings_count',
