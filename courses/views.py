@@ -42,15 +42,23 @@ class CourseList(generics.ListCreateAPIView):
         'created_at',
     ]
 
+    def perform_create(self, serializer):
+        if not self.request.user.profile.is_instructor:
+            raise PermissionDenied('You do not have permission to create a course. Only certified instructors can create courses.')
+        serializer.save(owner=self.request.user)
 
-
-    def create(self, request, *args, **kwargs):
-        if not request.user.profile.is_instructor:
-            return Response(
-                {'detail': 'You do not have permission to create a course. Only certified instructors can create courses.'},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        return super().create(request, *args, **kwargs)
+    # def create(self, request, *args, **kwargs):
+    #     print(request.data)
+    #     if not request.user.profile.is_instructor:
+    #         return Response(
+    #             {'detail': 'You do not have permission to create a course. Only certified instructors can create courses.'},
+    #             status=status.HTTP_403_FORBIDDEN
+    #         )
+    #     request.data['owner'] = request.user.pk
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save(owner=request.user)
+    #     return super().create(request, *args, **kwargs)
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
