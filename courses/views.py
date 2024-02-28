@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from .models import Course, COURSE_CATEGORIES
 from .serializers import CourseSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
+from .filters import CourseFilter
 
 
 class CourseList(generics.ListCreateAPIView):
@@ -24,6 +25,7 @@ class CourseList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
+    filterset_class = CourseFilter
     filterset_fields = [
         'owner',
         'category',
