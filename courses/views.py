@@ -41,7 +41,7 @@ class CourseList(generics.ListCreateAPIView):
         'created_at', 
         'price',
         'duration',
-        'created_at',
+        'overall_rating',
     ]
 
     def perform_create(self, serializer):
