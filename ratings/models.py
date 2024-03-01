@@ -11,7 +11,7 @@ class Rating(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()
-    rating = models.PositiveIntegerField(
+    rating = models.FloatField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
 
