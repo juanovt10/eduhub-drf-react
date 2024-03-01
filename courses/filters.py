@@ -6,6 +6,7 @@ class CourseFilter(django_filters.FilterSet):
     has_videos = django_filters.CharFilter(method='filter_has_videos')
     has_articles = django_filters.CharFilter(method='filter_has_articles')
     has_tests = django_filters.CharFilter(method='filter_has_tests')
+    min_rating = django_filters.NumberFilter(field_name='overall_rating', lookup_expr='gte')
 
     class Meta:
         model = Course
