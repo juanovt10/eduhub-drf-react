@@ -7,6 +7,8 @@ class CourseFilter(django_filters.FilterSet):
     has_articles = django_filters.CharFilter(method='filter_has_articles')
     has_tests = django_filters.CharFilter(method='filter_has_tests')
     min_rating = django_filters.NumberFilter(field_name='overall_rating', lookup_expr='gte')
+    enrolled = django_filters.BooleanFilter(method='filter_enrolled')
+    wish_listed = django_filters.BooleanFilter(method='filter_wish_listed')
 
     class Meta:
         model = Course
@@ -29,4 +31,22 @@ class CourseFilter(django_filters.FilterSet):
     def filter_has_tests(self, queryset, name, value):
         if value:
             return queryset.filter(test_count__gt=0)
+        return queryset
+
+    def filter_enrolled(self, queryset, name, value):
+        if self.request:
+            if value:
+                enrolled_course_ids = self.request.user.enrollment_set.values_list(
+                    'course_id', flat=True
+                )
+                queryset = queryset.filter(id__in=enrolled_course_ids)
+        return queryset
+
+    def filter_wish_listed(self, queryset, name, value):
+        if self.request:
+            if value:
+                wish_listed_course_ids = self.request.user.wishlist_set.values_list(
+                    'course_id', flat=True
+                )
+                queryset = queryset.filter(id__in=wish_listed_course_ids)
         return queryset

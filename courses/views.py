@@ -49,21 +49,6 @@ class CourseList(generics.ListCreateAPIView):
             raise PermissionDenied('You do not have permission to create a course. Only certified instructors can create courses.')
         serializer.save(owner=self.request.user)
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        user = self.request.user
-
-        if user.is_anonymous:
-            return queryset
-        
-        enrolled = self.request.query_params.get('enrolled', None)
-        wish_listed = self.request.query_params.get('wish_listed', None)
-
-        if enrolled is not None:
-            queryset = queryset.filter(enrollment__owner=user)
-
-        if wish_listed is not None:
-            queryset = queryset.filter(wishlist__owner=user)
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
