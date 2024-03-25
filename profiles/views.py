@@ -1,11 +1,11 @@
 from django.db.models import Count
-from rest_framework import generics, filters, status
+from rest_framework import generics, filters, status, permissions
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Profile
-from .serializers import ProfileSerializer
+from .models import Profile, InstructorApplication
+from .serializers import ProfileSerializer, InstructorApplicationSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 
 
@@ -48,3 +48,12 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
 
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class InstructorApplicationCreateView(generics.CreateAPIView):
+    queryset = InstructorApplication.objects.all()
+    serializer_class = InstructorApplicationSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()  

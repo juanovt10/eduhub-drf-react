@@ -4,6 +4,6 @@ from .models import Rating
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
 
-    list_display = ('title', 'owner', 'created_at')
-    search_fields = ['title', 'owner', 'course']
-    list_filter = ('title', 'owner', 'course')
+    list_display = ('owner', 'created_at')
+    search_fields = ['owner', 'course']
+    list_filter = ('owner', 'course')

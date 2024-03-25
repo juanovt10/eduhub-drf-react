@@ -8,12 +8,6 @@ class Profile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=255, blank=True)
     bio = models.TextField(blank=True)
-    dob = models.DateField(
-        verbose_name="Date of birth",
-        null=True,
-        blank=True,
-        help_text="Please enter your date of birth in DD-MM-YYYY format.",
-    )
     image = models.ImageField(
         upload_to = 'images/', default='../default_profile_m2rn8r'
     )
@@ -31,3 +25,11 @@ def create_profile(sender, instance, created, **kwargs):
         Profile.objects.create(owner=instance)
 
 post_save.connect(create_profile, sender=User)
+
+class InstructorApplication(models.Model):
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    application_text = models.TextField()
+    applied_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Application from {self.owner.username}'

@@ -1,5 +1,5 @@
 from rest_framework import serializers 
-from .models import Profile
+from .models import Profile, InstructorApplication
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -12,6 +12,21 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+        
+    def validate_image(self, value):
+        if value.size > 1024 * 1024 * 2:
+            raise serializers.ValidationError(
+                'Image size larger than 2MB'
+            )
+        if value.image.width > 4096:
+            raise serializers.ValidationError(
+                'Image width larger than 4096px'
+            )
+        if value.image.height > 4096:
+            raise serializers.ValidationError(
+                'Image height larger than 4096px'
+            )
+
 
     class Meta:
         model = Profile
@@ -21,3 +36,24 @@ class ProfileSerializer(serializers.ModelSerializer):
             'ratings_count', 'enrollments_count', 
             'wish_list_count',
         ]
+
+class InstructorApplicationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = InstructorApplication
+        fields = ['id', 'application_text', 'applied_on']
+        read_only_fields = ['id', 'applied_on']
+
+    def create(self, validated_data):
+        validated_data['owner'] = self.context['request'].user
+        return super().create(validated_data)
+    # class Meta:
+    #     model = InstructorApplication
+    #     fields = [
+    #         'id', 'owner', 'application_text', 'applied_on' 
+    #     ]
+    #     read_only_fields = ['id', 'applied_on', 'owner']
+
+
+    # def create(self, validated_data):
+    #     validated_data['owner'] = self.context['request'].owner
+    #     return super().create(validated_data)

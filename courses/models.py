@@ -28,7 +28,6 @@ class Course(models.Model):
         upload_to = 'images/', default='../course_default'
     )
     category = models.CharField(max_length=50, choices=COURSE_CATEGORIES, default='Technology')
-    duration = models.DurationField()
     created_at = models.DateTimeField(auto_now_add=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     video_hours = models.DecimalField(max_digits=5, decimal_places=1)
