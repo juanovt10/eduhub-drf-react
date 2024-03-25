@@ -44,7 +44,8 @@ class InstructorApplicationSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'applied_on', 'approved']
 
     def create(self, validated_data):
+        user = self.context['request'].user
         if InstructorApplication.objects.filter(owner=user).exists():
             raise ValidationError('An application already exist for this user')
-        validated_data['owner'] = self.context['request'].user
+        validated_data['owner'] = user
         return super().create(validated_data)
