@@ -32,7 +32,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = [
             'id', 'owner', 'created_at', 'name', 'bio',
-            'image', 'dob', 'is_owner', 'is_instructor',
+            'image', 'is_owner', 'is_instructor',
             'ratings_count', 'enrollments_count', 
             'wish_list_count',
         ]
