@@ -8,7 +8,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Enrollment
-        fields = ['id', 'owner', 'course', 'enrolled_at', 'completed']
+        fields = ['id', 'owner', 'course', 'enrolled_at']
 
     def create(self, validated_data):
         try: 
