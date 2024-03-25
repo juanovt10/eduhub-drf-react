@@ -42,7 +42,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class InstructorApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstructorApplication
-        fields = ['id', 'application_text', 'applied_on']
+        fields = ['id', 'owner','application_text', 'applied_on']
         read_only_fields = ['id', 'applied_on', 'approved']
 
     def create(self, validated_data):
