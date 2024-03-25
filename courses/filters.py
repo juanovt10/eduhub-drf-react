@@ -9,6 +9,7 @@ class CourseFilter(django_filters.FilterSet):
     min_rating = django_filters.NumberFilter(field_name='overall_rating', lookup_expr='gte')
     enrolled = django_filters.BooleanFilter(method='filter_enrolled')
     wish_listed = django_filters.BooleanFilter(method='filter_wish_listed')
+    owner_username = django_filters.CharFilter(method='filter_by_owner_username')
 
     class Meta:
         model = Course
@@ -49,4 +50,8 @@ class CourseFilter(django_filters.FilterSet):
                     'course_id', flat=True
                 )
                 queryset = queryset.filter(id__in=wish_listed_course_ids)
+
+    def filter_by_owner_username(self, queryset, name, value):
+        return queryset.filter(owner__username=value)
+
         return queryset
