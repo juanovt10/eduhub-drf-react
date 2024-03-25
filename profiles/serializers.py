@@ -1,5 +1,7 @@
 from rest_framework import serializers 
 from .models import Profile, InstructorApplication
+from rest_framework.exceptions import ValidationError
+
 
 
 class ProfileSerializer(serializers.ModelSerializer):

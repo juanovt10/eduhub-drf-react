@@ -50,7 +50,7 @@ class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class InstructorApplicationCreateView(generics.CreateAPIView):
+class InstructorApplicationCreateView(generics.ListCreateAPIView):
     queryset = InstructorApplication.objects.all()
     serializer_class = InstructorApplicationSerializer
     permission_classes = [permissions.IsAuthenticated]
