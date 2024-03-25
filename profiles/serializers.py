@@ -42,8 +42,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 class InstructorApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model = InstructorApplication
-        fields = ['id', 'owner','application_text', 'applied_on']
-        read_only_fields = ['id', 'applied_on', 'approved']
+        fields = ['id', 'owner', 'application_text', 'applied_on']
+        read_only_fields = ['id', 'owner', 'applied_on', 'approved']
 
     def create(self, validated_data):
         user = self.context['request'].user
