@@ -15,6 +15,7 @@ class RatingSerializer(serializers.ModelSerializer):
     )
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
+    course_title = serializers.ReadOnlyField(source='course.title')
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -30,9 +31,10 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = [
-            'id', 'owner', 'course', 'created_at',
-            'updated_at', 'content', 'rating', 'is_owner',
-            'profile_id', 'profile_image',
+            'id', 'owner', 'course', 'course_title',
+            'created_at', 'updated_at', 'content', 
+            'rating', 'is_owner', 'profile_id', 
+            'profile_image',
         ]
 
     def create(self, validated_data):
