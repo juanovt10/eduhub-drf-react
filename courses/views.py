@@ -40,7 +40,6 @@ class CourseList(generics.ListCreateAPIView):
         'enrollment_count',
         'created_at', 
         'price',
-        'duration',
         'overall_rating',
     ]
 
@@ -48,7 +47,6 @@ class CourseList(generics.ListCreateAPIView):
         if not self.request.user.profile.is_instructor:
             raise PermissionDenied('You do not have permission to create a course. Only certified instructors can create courses.')
         serializer.save(owner=self.request.user)
-
 
 
 class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -59,6 +57,7 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
         enrollments_count = Count('enrollment', distinct=True),
         overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
     ).order_by('created_at')
+
 
 class CourseCategoryList(APIView):
     def get(self, request, format=None):
