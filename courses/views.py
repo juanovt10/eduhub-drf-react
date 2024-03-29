@@ -8,6 +8,8 @@ from .models import Course, COURSE_CATEGORIES
 from .serializers import CourseSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 from .filters import CourseFilter
+from django.core.exceptions import PermissionDenied
+
 
 
 class CourseList(generics.ListCreateAPIView):

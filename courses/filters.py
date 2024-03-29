@@ -55,6 +55,7 @@ class CourseFilter(django_filters.FilterSet):
                     'course_id', flat=True
                 )
                 queryset = queryset.filter(id__in=wish_listed_course_ids)
+        return queryset
 
     def filter_by_owner_username(self, queryset, name, value):
         return queryset.filter(owner__username=value)
