@@ -51,7 +51,7 @@ class CourseFilter(django_filters.FilterSet):
     def filter_wish_listed(self, queryset, name, value):
         if self.request:
             if value:
-                wish_listed_course_ids = self.request.user.wishlist.values_list(
+                wish_listed_course_ids = self.request.user.wishlists_set.values_list(
                     'course_id', flat=True
                 )
                 queryset = queryset.filter(id__in=wish_listed_course_ids)
