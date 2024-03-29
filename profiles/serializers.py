@@ -29,6 +29,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                 'Image height larger than 4096px'
             )
 
+        return value
 
 
     class Meta:
