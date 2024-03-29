@@ -45,7 +45,7 @@ While adding image specifications to the profile and course serializers, I omitt
 To unlock the application and refresh the JWTs, I repeatedly changed the secret key and redeployed it. After several attempts, the application encountered a 500 error related to the course resource. Unable to identify the exact problem, I decided, with advice from Code Institute tutors, to reset the database and try again. This action unlocked the application and API, but the issue was fully resolved only when I added the missing return statement in the validate image method of the profile serializer.
 
 ### Unfixed bugs
-- Wish list filter for profile course display. Due to lack of time, I was not able to fix this bug that prevents the user from see the courses they have add to their wish list. 
+- None so far
 
 ## Technologies used
 
