@@ -35,4 +35,45 @@ Finally, the enrollments and wish lists models are only related to the timing wh
 
 ## Testing
 
-All fi
+All files passed the [PEP8 valdator] with no issues except by the more than 79 characters per line recomended by PEP 8. 
+
+![pep8validator](/static//readme-images/PEP8Validator.png)
+
+### Manual testing: 
+
+Testing can be found in [other repo link]
+
+### Fixed bugs
+
+When adding the image specifications to the profile and course serializers I omited the return value for the profile serializer validated image method. This was leading to a big problem in the front end. The missing of the return value was then returning a null value for the image, making in unacceptable for the database. Therefore, if the user was not delete it straight away it could lock the application. 
+
+To unlock the applicaiton and refresh the JWTs I had to multople times change the secret key and redeployed. Then after various attempts, the application was throwing a 500 error in the course resourse. Unable to pinpoint where was the issue, I decided, in conjunction with Code institue tutors, to reset the database and try again. This situation did unlocked the application and API but the issue was just addressed when I added the return statement in the validate image method in the profile serializer. 
+
+### Unfixed bugs
+- None
+
+## Technologies used
+
+### Programming Languages:
+
+- Python
+
+### Frameworks, Libraries & Programs Used: 
+
+- Django RestFramework
+- Cloudinary
+- Heroku
+- Pillow
+- Django Rest Auth
+- PostgreSQL
+- Cors Headers
+
+## Deployment 
+
+ADD deployment steps 
+
+## Credits 
+
+ADD credits 
+
+
