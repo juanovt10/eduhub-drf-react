@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .models import Rating
 
+
 @receiver(post_save, sender=Rating)
 def updated_course_overall_rating(sender, instance, **kwargs):
     course = instance.course

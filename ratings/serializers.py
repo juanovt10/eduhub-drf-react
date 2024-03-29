@@ -27,13 +27,12 @@ class RatingSerializer(serializers.ModelSerializer):
     def get_updated_at(self, obj):
         return naturaltime(obj.updated_at)
 
-    
     class Meta:
         model = Rating
         fields = [
             'id', 'owner', 'course', 'course_title',
-            'created_at', 'updated_at', 'content', 
-            'rating', 'is_owner', 'profile_id', 
+            'created_at', 'updated_at', 'content',
+            'rating', 'is_owner', 'profile_id',
             'profile_image',
         ]
 
@@ -48,4 +47,3 @@ class RatingSerializer(serializers.ModelSerializer):
 
 class RatingDetailSerializer(RatingSerializer):
     course = serializers.ReadOnlyField(source='course.id')
-    

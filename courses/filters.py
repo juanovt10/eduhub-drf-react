@@ -1,15 +1,20 @@
 import django_filters
 from .models import Course
 
+
 class CourseFilter(django_filters.FilterSet):
     category = django_filters.CharFilter(method='filter_by_categories')
     has_videos = django_filters.CharFilter(method='filter_has_videos')
     has_articles = django_filters.CharFilter(method='filter_has_articles')
     has_tests = django_filters.CharFilter(method='filter_has_tests')
-    min_rating = django_filters.NumberFilter(field_name='overall_rating', lookup_expr='gte')
+    min_rating = django_filters.NumberFilter(
+        field_name='overall_rating', lookup_expr='gte'
+    )
     enrolled = django_filters.BooleanFilter(method='filter_enrolled')
     wish_listed = django_filters.BooleanFilter(method='filter_wish_listed')
-    owner_username = django_filters.CharFilter(method='filter_by_owner_username')
+    owner_username = django_filters.CharFilter(
+        method='filter_by_owner_username'
+    )
 
     class Meta:
         model = Course
@@ -28,7 +33,7 @@ class CourseFilter(django_filters.FilterSet):
         if value:
             return queryset.filter(article_count__gt=0)
         return queryset
-    
+
     def filter_has_tests(self, queryset, name, value):
         if value:
             return queryset.filter(test_count__gt=0)
@@ -55,3 +60,4 @@ class CourseFilter(django_filters.FilterSet):
         return queryset.filter(owner__username=value)
 
         return queryset
+        

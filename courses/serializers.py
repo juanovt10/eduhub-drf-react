@@ -17,7 +17,6 @@ class CourseSerializer(serializers.ModelSerializer):
     enrollments_count = serializers.ReadOnlyField()
     overall_rating = serializers.ReadOnlyField()
 
-
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
@@ -47,7 +46,6 @@ class CourseSerializer(serializers.ModelSerializer):
 
         return value
 
-
     class Meta:
         model = Course
         fields = [
@@ -55,6 +53,6 @@ class CourseSerializer(serializers.ModelSerializer):
             'category', 'created_at', 'price',
             'video_hours', 'test_count', 'article_count',
             'is_owner', 'profile_id', 'overall_rating',
-            'profile_image', 'rating_id', 'ratings_count', 
+            'profile_image', 'rating_id', 'ratings_count',
             'enrollments_count',
         ]

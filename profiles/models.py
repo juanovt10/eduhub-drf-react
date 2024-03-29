@@ -18,14 +18,16 @@ class Profile(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.owner}'s profile" 
+        return f"{self.owner}'s profile"
 
 
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(owner=instance)
 
+
 post_save.connect(create_profile, sender=User)
+
 
 class InstructorApplication(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,6 +37,7 @@ class InstructorApplication(models.Model):
 
     def __str__(self):
         return f'Application from {self.owner.username}'
+
 
 @receiver(post_save, sender=InstructorApplication)
 def approve_instructor_application(sender, instance, **kwargs):

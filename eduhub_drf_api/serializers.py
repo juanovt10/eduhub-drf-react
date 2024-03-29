@@ -10,3 +10,4 @@ class CurrentUserSerializer(UserDetailsSerializer):
         fields = UserDetailsSerializer.Meta.fields + (
             'profile_id', 'profile_image'
         )
+        

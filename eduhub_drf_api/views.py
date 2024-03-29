@@ -12,6 +12,7 @@ def root_route(request):
         'message': 'Welcome to eduhub drf API'
     })
 
+
 # dj-rest-auth logout view fix
 @api_view(['POST'])
 def logout_route(request):

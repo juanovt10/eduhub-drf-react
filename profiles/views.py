@@ -9,7 +9,6 @@ from .serializers import ProfileSerializer, InstructorApplicationSerializer
 from eduhub_drf_api.permissions import IsOwnerOrReadOnly
 
 
-
 class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.annotate(
         ratings_count = Count('owner__rating', distinct=True),
@@ -56,4 +55,4 @@ class InstructorApplicationCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save()  
+        serializer.save()

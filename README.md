@@ -1,39 +1,38 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Eduhub Learning Platform - API
 
-Welcome,
+Eduhub is a learning platform design for people that want to master knowledge by teaching others. The platform allows them to create courses and interact with other users throught reviews. This seciton of the project with the REST API powered by the Django Rest Framework to support the ReactJS front end. 
 
-This is the Code Institute student template for Codeanywhere. If you are using Gitpod then you need [this template](https://github.com/Code-Institute-Org/gitpod-full-template) instead.  We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+- Here you can find the [backendAPI render]
+- Here you can find the front end live site
+- Here you can find the front end repository
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Codeanywhere and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **August 30th, 2023**
+## Table of contents
 
-## Codeanywhere Reminders
++ [User stories](#user-stories)
++ [Database](#database)
++ [Testing](#testing)
++ [Technologies used](#technologies-used)
++ [Deployment](#deployment)
++ [Credits](#credits)
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere, in the terminal, type:
+## User Stories
 
-`python3 -m http.server`
+To be filled
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+## Database
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere with no-cache, you can use this alias for `python3 -m http.server`.
+The database schema is composed by five models: user profile, course, ratings, enrollments and wish lists. 
 
-`http_server`
+When a new user signs up on the website, a user profile instance is automatically generated, utilizing a One-to-One Field with the username. Subsequently, the user is requested complete their profile information with the EditProfileForm to finalize the profile details.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+The course model contains the owner as foregin key, representing the username who created the posts, followed by character and text fields. 
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+The rating model contains the owner and course as foreign keys, then followed by the rating value and review content. 
 
-In Codeanywhere you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+Finally, the enrollments and wish lists models are only related to the timing where they are created and related to the course and owner. This are key for each user to review which courses do htey have in their enrollment lists and wish list. 
 
-To log into the Heroku toolbelt CLI:
+![databseSchema](/static//readme-images/databaseSchema.png)
 
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In Codeanywhere, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+## Testing
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
----
-
-Happy coding!
+All fi

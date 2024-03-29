@@ -8,7 +8,6 @@ from .models import Rating
 from .serializers import RatingSerializer, RatingDetailSerializer
 
 
-
 class RatingList(generics.ListCreateAPIView):
     serializer_class = RatingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -35,10 +34,5 @@ class RatingStatsView(APIView):
                 .values('rating')
                 .annotate(count=Count('id'))
                 .order_by('rating'))
-        
+
         return Response(data)
-
-
-
-
-

@@ -18,7 +18,9 @@ class CourseList(generics.ListCreateAPIView):
     queryset = Course.objects.annotate(
         ratings_count = Count('rating', distinct=True),
         enrollments_count = Count('enrollment', distinct=True),
-        overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
+        overall_rating = (
+            Sum('rating__rating')) / Count('rating', distinct=True
+        ),
     ).order_by('created_at')
     filter_backends = [
         filters.OrderingFilter,
@@ -45,7 +47,9 @@ class CourseList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         if not self.request.user.profile.is_instructor:
-            raise PermissionDenied('You do not have permission to create a course. Only certified instructors can create courses.')
+            raise PermissionDenied(
+                'You do not have permission to create a course. Only certified instructors can create courses.'
+            )
         serializer.save(owner=self.request.user)
 
 
@@ -55,13 +59,17 @@ class CourseDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Course.objects.annotate(
         ratings_count = Count('rating', distinct=True),
         enrollments_count = Count('enrollment', distinct=True),
-        overall_rating = (Sum('rating__rating')) / Count('rating', distinct=True),
+        overall_rating = (
+            Sum('rating__rating')) / Count('rating', distinct=True
+        ),
     ).order_by('created_at')
 
 
 class CourseCategoryList(APIView):
     def get(self, request, format=None):
-        categories = [{'key': cat[0], 'value': cat[1]} for cat in COURSE_CATEGORIES]
+        categories = [
+            {'key': cat[0], 'value': cat[1]} for cat in COURSE_CATEGORIES
+        ]
         return Response(categories)
 
 

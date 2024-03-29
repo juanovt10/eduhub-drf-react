@@ -1,7 +1,6 @@
-from rest_framework import serializers 
+from rest_framework import serializers
 from .models import Profile, InstructorApplication
 from rest_framework.exceptions import ValidationError
-
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -14,7 +13,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
-        
+
     def validate_image(self, value):
         if value.size > 1024 * 1024 * 2:
             raise serializers.ValidationError(
@@ -31,15 +30,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         return value
 
-
     class Meta:
         model = Profile
         fields = [
             'id', 'owner', 'created_at', 'name', 'bio',
             'image', 'is_owner', 'is_instructor',
-            'ratings_count', 'enrollments_count', 
+            'ratings_count', 'enrollments_count',
             'wish_list_count',
         ]
+
 
 class InstructorApplicationSerializer(serializers.ModelSerializer):
     class Meta:

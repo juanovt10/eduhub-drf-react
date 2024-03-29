@@ -11,7 +11,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'course', 'enrolled_at']
 
     def create(self, validated_data):
-        try: 
+        try:
             return super().create(validated_data)
         except IntegrityError:
             raise serializers.ValidationError({
